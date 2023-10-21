@@ -1,0 +1,28 @@
+{
+  "name": "node-events",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "compile": "npx tsc -sourcemap --declaration",
+    "watch": "npx tsc -sourcemap --declaration -w",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/chai": "^4.3.9",
+    "@types/mocha": "^10.0.3",
+    "@types/node": "^20.8.7",
+    "@types/supertest": "^2.0.15",
+    "chai": "^4.3.10",
+    "mocha": "^10.2.0",
+    "reflect-metadata": "^0.1.13",
+    "supertest": "^6.3.3",
+    "typescript": "^5.2.2"
+  }
+}
