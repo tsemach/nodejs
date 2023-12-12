@@ -8,7 +8,7 @@ import { expect } from 'chai'
 import { utils } from '../../src/common'
 const logger = Logger.get('application-test')
 
-describe('Test Application API', function() {  
+describe('Test Events API', function() {  
   this.beforeAll(async () => {
     await Initiator.instance.init({ withExit: false })
   })
@@ -17,7 +17,7 @@ describe('Test Application API', function() {
     Initiator.instance.setOptions({ withExit: true })
   })
 
-  it('application.test.ts: test send user1 event to activate shutdown', async () => {        
+  it('events.test.ts: test send user1 event to activate shutdown', async () => {        
     process.kill(process.pid, "SIGUSR1");
     
     await utils.sleep(1000)    
@@ -26,7 +26,7 @@ describe('Test Application API', function() {
     expect(EventPool.instance.fired.length).to.be.gt(0)
   })
 
-  it('application.test.ts: test send health api to test firing health event', async () => {        
+  it('events.test.ts: test send health api to test firing health event', async () => {        
 
     const reply = await request(Server.instance.app)
       .get('/health')

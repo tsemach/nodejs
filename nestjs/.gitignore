@@ -1,0 +1,11 @@
+dist/
+node_modules/
+coverage/
+.nyc_output/
+
+.idea
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
