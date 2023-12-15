@@ -5,12 +5,6 @@ export DISTDIR=_dist
 export isAll=false
 export ROOTDIR=`pwd`
 
-# NPM_PRIVATE_ARTIFACT=..
-# NPM_PUBLIC_ARTIFACT=..
-
-# NPM_PRIVATE_REGISTRY=..
-# NPM_PUBLIC_REGISTRY=..
-
 if [ -d dist/src ]; then 
   DISTSRC=dist/src
   ROOTDIR=../..

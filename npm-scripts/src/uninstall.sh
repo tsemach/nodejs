@@ -1,11 +1,6 @@
 #!/usr/bin/env bash
 
 DIST=_dist
-# NPM_PRIVATE_ARTIFACT=
-# NPM_PUBLIC_ARTIFACT=
-
-# NPM_PRIVATE_REGISTRY=
-# NPM_PUBLIC_REGISTRY=
 
 function usage() {
   echo ""

@@ -27,10 +27,7 @@ fi
 
 function getDistDir() {
   local package=$1; shift 
-  local rootdir=$1; shift 
-
-  
-  
+  local rootdir=$1; shift     
 }
 package=$1
 rootdir=$2
