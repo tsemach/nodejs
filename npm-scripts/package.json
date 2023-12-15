@@ -1,0 +1,28 @@
+{
+  "name": "npm-scripts",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git"    
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "files": [
+    "src"
+  ],
+  "bin": {
+    "types": "./src/types.sh",
+    "publish": "./src/publish.sh",
+    "install": "./src/install.sh",
+    "uninstall": "./src/uninstall.sh",
+    "update": "./src/update.sh",
+    "npmlogin": "./src/npmlogin.sh",    
+    "set-tag": "./src/set-tag.sh",
+    "set-libs": "./src/set-libs.sh"   
+  }
+}
