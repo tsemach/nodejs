@@ -1,13 +1,14 @@
+export type KeyOfType<Type, ValueType> = keyof {
+  [Key in keyof Type as Type[Key] extends ValueType ? Key : never]: any;
+};
+
+export type ClassMethods<T> = KeyOfType<T, Function>;
+export type ClassMethodsRecord<Type> = Partial<Record<ClassMethods<Omit<Type, 'defineAll'>>, any>>;
+
 export class Config<T=any> {
-  // private _params: ConfigParams = {} as any
   protected _params: T = {} as any
 
   constructor() {      
-    // this.defineGetterSetter('port')          
-    // this.defineGetterSetter('host')
-
-    // this._params['host'] = 'tsemach.org'
-    // this._params.port = 8080
   }
   
   init(_params: Partial<T>) {
@@ -15,7 +16,6 @@ export class Config<T=any> {
       this._params[key] = _params[key] ? _params[key] : this._params[key]
     }
     this.defineAll()
-    // Object.keys(this._params).forEach(prop => this.defineGetterSetter(prop))              
   }
   
   protected defineAll() {
@@ -31,5 +31,5 @@ export class Config<T=any> {
 }
 
 export function instance<C, P>(c: new (...args: unknown[]) => C) {
-  return (new c() as unknown ) as P & { _params: P }
+  return (new c() as unknown ) as ClassMethodsRecord<C> & P & { _params: P }
 }

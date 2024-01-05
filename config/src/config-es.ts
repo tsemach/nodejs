@@ -1,4 +1,4 @@
-import { Config } from "./config"
+import { Config, ClassMethodsRecord } from "./config"
 
 export interface ConfigESParamsType {
   host: string
@@ -13,10 +13,14 @@ export class ConfigES extends Config<ConfigESParamsType> {
     this._params.port = 8080
 
     this.defineAll()
-  } 
+  }   
+
+  params() {
+    return this._params
+  }
 
   static new() {
-    return (new ConfigES() as unknown ) as ConfigESParamsType & { _params: ConfigESParamsType }
+    return (new ConfigES() as unknown ) as ClassMethodsRecord<ConfigES> & ConfigESParamsType & { _params: ConfigESParamsType }    
   }
 }
 
