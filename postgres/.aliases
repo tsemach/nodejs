@@ -1,0 +1,27 @@
+function exportDotEnv() {
+  local envfile=$1; shift
+
+  for line in `cat $envfile`
+  do
+    echo $line | grep "^#" > /dev/null 2>&1
+    if [ $? -eq 0 ]; then
+      continue
+    fi
+
+    name=$(echo $line | awk -F= '{print $1}')
+    value=$(echo $line | awk -F= '{print $2}')
+    export $name=$value
+  done
+}
+
+function exportJSONEnv() {
+  local envfile=$1; shift
+
+  keys=`jq -r 'keys[]' $envfile` | sed -z '$ s/\n$//'
+  for key in $keys
+  do
+    export name=$key
+    val=`jq -r '.[env.name]' $envfile`
+    export $key=$val
+  done
+}
