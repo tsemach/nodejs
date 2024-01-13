@@ -1,0 +1,1 @@
+export type Provider<T> = new (...args: any[]) => T
