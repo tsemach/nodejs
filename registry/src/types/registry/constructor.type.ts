@@ -1,0 +1,1 @@
+export type Construct = new (...args: any[]) => any

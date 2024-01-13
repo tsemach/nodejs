@@ -1,4 +1,5 @@
 import { Registry, Indicator } from '../registry'
+import { Construct } from '../types';
 
 /** 
  * https://www.theserverside.com/tutorial/Understanding-the-TypeScript-method-decorator
@@ -7,12 +8,11 @@ import { Registry, Indicator } from '../registry'
  * @param method  the method activate on the class
  * @usage ()
 */
-export function Register(group: string, clazz: string): any {  
+export function Register(group: string, name: string): any {  
   function wrapper(target: any) {    
     const original = target;
         
-    let instance = new original();
-    Registry.instance.add(new Indicator(group, clazz), instance)
+    Registry.instance.add(new Indicator(group, name), target)
     
     return original
   }  

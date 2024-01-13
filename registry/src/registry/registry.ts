@@ -1,13 +1,11 @@
 import { workerData } from "worker_threads"
-import { Provider } from "../types"
+import { Construct, Provider } from "../types"
 import { Indicator } from "./indicator"
 import { isIndicator } from "./indicator-guards"
 import { RegistryError } from "./registry-error"
 import { Context } from "mocha"
 
 // Type 'Worker' provides no match for the signature 'new (...args: any[]): Worker'.ts(2344)
-
-type Construct = new (...args: any[]) => any
 
 export class Registry {
   private static _instance: Registry
