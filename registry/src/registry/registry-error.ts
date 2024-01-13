@@ -5,3 +5,11 @@ export class RegistryError extends Error {
   }  
   
 }
+
+export class RegistryScopeError extends Error {
+
+  constructor(message?: string) {
+    super(message)
+  }  
+  
+}
