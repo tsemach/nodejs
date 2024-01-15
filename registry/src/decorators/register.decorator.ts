@@ -2,7 +2,8 @@ import { Registry, Indicator } from '../registry'
 import { RegistryOptions } from '../types';
 
 const defaultRegistryOptions: RegistryOptions = {
-  scope: 'singletone'
+  scope: 'singletone',
+  useMock: false
 }
 
 /** 
@@ -13,9 +14,12 @@ const defaultRegistryOptions: RegistryOptions = {
  * @usage ()
 */
 export function Register(group: string, name: string, options = defaultRegistryOptions): any {  
-  function wrapper(target: any) {    
+  function wrapper(target: any, propertyKey: string, descriptor: PropertyDescriptor) {    
     const original = target;
-        
+    
+    if (options.useMock) {
+      Registry.instance.mock(new Indicator(group, name), target, options)  
+    }
     Registry.instance.add(new Indicator(group, name), target, options)
     
     return original

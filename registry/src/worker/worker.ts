@@ -1,5 +1,3 @@
-import { IncomingMessage } from "http"
-
 export class Worker {
   public count = 0
 

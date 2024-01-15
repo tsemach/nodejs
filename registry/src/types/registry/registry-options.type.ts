@@ -1,3 +1,4 @@
 export interface RegistryOptions {
-  scope: 'singletone' | 'request'
+  scope?: 'singletone' | 'request'
+  useMock?: boolean
 }

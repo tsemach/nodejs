@@ -1,4 +1,5 @@
 import { Worker } from '../../src/worker/worker'
+import { ProviderMock } from '../../src/worker/provider-mock'
 import { Provider } from '../../src/worker/provider'
 import { Indicator, Registry } from '../../src/registry'
 import { expect } from 'chai';
@@ -43,6 +44,25 @@ describe('Register API Test', () => {
 
     expect(provider).to.be.an.instanceof(Provider)
     expect(provider.name()).to.be.equal('Provider')
+    expect(provider.count).to.be.equal(2)
+    expect(Registry.instance.has(indicator)).to.be.true
+  });
+
+  it('registry.test.ts: test singleton with mock provider', async () => {
+    console.log("test called")
+    const indicator = new Indicator('group', 'provider')
+    
+    let provider = Registry.instance.get<Provider>(indicator)    
+    provider.print()
+    provider.inc()
+    provider.inc()
+    provider.print()
+    
+    provider = Registry.instance.get<Provider>(indicator)    
+    provider.print()
+
+    expect(provider).to.be.an.instanceof(ProviderMock)
+    expect(provider.name()).to.be.equal('ProviderMock')
     expect(provider.count).to.be.equal(2)
     expect(Registry.instance.has(indicator)).to.be.true
   });
