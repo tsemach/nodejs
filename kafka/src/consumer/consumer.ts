@@ -1,4 +1,4 @@
-import { Kafka, Consumer as KafkaConsumber } from "kafkajs";
+import { Kafka, Consumer as KafkaConsumber, Partitioners } from "kafkajs";
 
 export class Consumer {
   private _kafka: Kafka
