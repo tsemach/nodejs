@@ -1,0 +1,1 @@
+npx mocha -r ts-node/register --inspect tests/async-queue.test.ts -g 'async-queue.test.ts: test on api - notify on put'
