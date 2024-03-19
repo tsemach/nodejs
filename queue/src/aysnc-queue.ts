@@ -1,6 +1,8 @@
 import { EventEmitter } from 'node:events'
 import { utils } from './utils/utils'
 import { Valve } from './valve.enum'
+import { AsyncEventEmitterCB, EventEmitterCB } from './types'
+import { throws } from 'node:assert'
 
 export class AsyncQueue<T> {
   private _limit: number
@@ -8,6 +10,7 @@ export class AsyncQueue<T> {
   private _valve = Valve.OPEN
   private readonly _getEmitter = new EventEmitter()
   private readonly _putEmitter = new EventEmitter()
+  private _asyncCB: AsyncEventEmitterCB  
 
   constructor(limit?: number) {    
     if (limit) {
@@ -20,7 +23,7 @@ export class AsyncQueue<T> {
       await this._waitForSpace(data.length)
       
       data.forEach(e => this.data.push(e))
-      this._putEmitter.emit('put', data.length)
+      this._putEmitter.emit('put', data.length)      
 
       return
     }
@@ -37,6 +40,11 @@ export class AsyncQueue<T> {
     if (needed === 1) {
       const elem = this.data.shift()
       this._getEmitter.emit("get", needed);
+      this._getEmitter.emit("data", elem);
+
+      if (this._asyncCB) {
+        await this._asyncCB(elem)
+      }
 
       return elem
     }
@@ -46,6 +54,11 @@ export class AsyncQueue<T> {
       result.push(this.data.shift())
     }
     this._getEmitter.emit("get", needed);
+    this._getEmitter.emit("data", result);
+
+    if (this._asyncCB) {
+      await this._asyncCB(result)
+    }
  
     return result
   }
@@ -96,6 +109,17 @@ export class AsyncQueue<T> {
     }
   }
 
+  public on(cb: EventEmitterCB<T>) {
+    this._getEmitter.on('data', cb)
+  }
+
+  public asyncCB(cb: AsyncEventEmitterCB<T>) {
+    this._asyncCB = cb
+  }
+
+  public off(cb: EventEmitterCB<T>) {
+    this._getEmitter.off('data', cb)
+  }
 
   public hasSpace(needed = 1) {
     if ( ! this._limit && this._limit < 0 ) {
