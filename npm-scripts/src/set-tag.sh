@@ -1,8 +1,5 @@
 #!/bin/bash
 
-. .colors
-. .aliases
-
 function checkEnv() {
   local env=$1: shift
 

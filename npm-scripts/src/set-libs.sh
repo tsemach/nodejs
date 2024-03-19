@@ -1,7 +1,7 @@
 #!/bin/bash
 
-export module_type_prefix=ims
-export module_prefix=@$module_type_prefix
+# export module_type_prefix=
+# export module_prefix=@$module_type_prefix
 
 function set_prefix() {
   local name=$1; shift

@@ -8,14 +8,14 @@ function usage() {
   echo "  -p | --package: the package name to install"  
   echo ""
   echo "Examples"
-  echo "  npx uninstall -p @ims/iot-lib  - uninstall @ims/iot-lib and @types/ims__iot-lib"
+  echo "  npx uninstall -p @ims/iot-lib  - uninstall @ims/iot-lib and @types/org__mylib"
   echo "  npx uninstall axios            - uninstall only axios with no types"
   echo ""
   echo "Environment Variables:"  
   echo "  NPM_PRIVATE_ARTIFACT - private artifact name to use in jforg"
   echo "  NPM_PUBLIC_ARTIFACT - publich artifact name to use in jforg"
-  echo "  NPM_PRIVATE_REGISTRY  - an artifact to upload (publish) ims private packages, default is ims-cloud-npm-dev-local"
-  echo "  NPM_PUBLIC_REGISTRY   - an artifact to install publish packages from public registry, default is ims-cloud-npm-virtual"
+  echo "  NPM_PRIVATE_REGISTRY  - an artifact to upload (publish) to private npm repository"
+  echo "  NPM_PUBLIC_REGISTRY   - an artifact to install publish packages to public registry"
   echo ""
 
   exit 1

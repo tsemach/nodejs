@@ -80,6 +80,10 @@ mkdir ${TYPEDIR}
 copyFiles
 packageDotJson > ${TYPEDIR}/package.json
 
-(cd ${TYPEDIR}; npm publish --registry $NPM_PRIVATE_REGISTRY)
+if [ X$NPM_PRIVATE_REGISTRY = X ]; then
+  (cd ${TYPEDIR}; npm publish)
+else
+  (cd ${TYPEDIR}; npm publish --registry $NPM_PRIVATE_REGISTRY)  
+fi
 
 exit $?

@@ -27,10 +27,10 @@ function usage() {
   echo "  npx publish minor: publish just the package without @types<package-name> while increase the minor number"  
   echo ""
   echo "Environment Variables:"  
-  echo "  NPM_PRIVATE_ARTIFACT - private artifact name to use in jforg"
-  echo "  NPM_PUBLIC_ARTIFACT - publich artifact name to use in jforg"
-  echo "  NPM_PRIVATE_REGISTRY  - an artifact to upload (publish) ims private packages, default is ims-cloud-npm-dev-local"
-  echo "  NPM_PUBLIC_REGISTRY   - an artifact to install publish packages from public registry, default is ims-cloud-npm-virtual"
+  echo "  NPM_PRIVATE_ARTIFACT - private artifact name to use in private npm repository"
+  echo "  NPM_PUBLIC_ARTIFACT - publich artifact name to use in private npm repository"
+  echo "  NPM_PRIVATE_REGISTRY  - an artifact to upload (publish) to private npm reposiotry packages"
+  echo "  NPM_PUBLIC_REGISTRY   - an artifact to install publish packages from public registry"
   echo ""
 
   exit 1
@@ -90,15 +90,6 @@ withTypes=false
 withTypesAll=''
 withBuildTarget=compile
 
-# isCommit
-# if [ $? -ne 0 ]; then
-#   echo ""
-#   echo "  working directory is not clean, commit your code before publish"
-#   echo ""
-
-#   exit 1
-# fi
-
 while [ $# -gt 0 ]; do
   arg=$1; shift
 
@@ -141,7 +132,6 @@ if [ X$withTypes = X"true" ]; then
   name=$(jq -r '.name' package.json)
   echo "going to publish @types/${name}"
   npx types $withTypesAll
-  # bash -x ./types.sh $withTypesAll
   ret=$?
 fi
 
