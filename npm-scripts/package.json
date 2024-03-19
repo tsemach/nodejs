@@ -23,6 +23,6 @@
     "update": "./src/update.sh",
     "npmlogin": "./src/npmlogin.sh",    
     "set-tag": "./src/set-tag.sh",
-    "set-libs": "./src/set-libs.sh"   
+    "set-links": "./src/set-links.sh"   
   }
 }
