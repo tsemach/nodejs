@@ -1,4 +1,5 @@
 import { AsyncQueue } from "../src/aysnc-queue"
+import { AsyncEventEmitterCB, EventEmitterCB } from "../src/types"
 import { utils } from "../src/utils"
 import { expect } from 'chai'
 
@@ -64,4 +65,44 @@ describe('Async Queue API Test', () => {
     expect(result[0] <= result[1]).to.be.true
     expect(size).to.be.equal(0)
   })
+
+  it('async-queue.test.ts: test callback with on method', (done) => {  
+    const queue = new AsyncQueue<string>(10)
+
+    const eventCB: EventEmitterCB = async (length: number) => {
+      console.log("eventCB, value is:", length)
+      
+      const data = await queue.get(length)
+      console.log("eventCB, data is:", data)
+
+      expect(data).to.equal('event-put')
+
+      done()
+    }
+    queue.on(eventCB)
+    queue.put('event-put').then(value => console.log("put: event-put"))
+  })
+
+  it('async-queue.test.ts: test callback with async callback', (done) => {  
+    const queue = new AsyncQueue<string>(10)
+    let calles = 0
+
+    const asyncCB: AsyncEventEmitterCB = async (length: number) => {
+      console.log("eventCB, value is:", length)
+      
+      const data = await queue.get(length)
+      console.log("eventCB, data is:", data)
+
+      expect(data).to.equal('event-put')
+
+      if (++calles >= 2 ) {
+        done()
+      }
+    }
+    queue.on(asyncCB)
+
+    queue.put('event-put-1').then(value => console.log("put: event-put-1"))
+    queue.put('event-put-2').then(value => console.log("put: event-put-2"))
+  })
+
 })

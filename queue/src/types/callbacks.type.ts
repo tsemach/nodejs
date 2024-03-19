@@ -1,5 +1,5 @@
 export type Callback = (err: any, ...args: any[]) => any;
 
-export type EventEmitterCB<T = any> = (value: T | T[]) => any
+export type EventEmitterCB = (length: number) => any
 
-export type AsyncEventEmitterCB<T = any> = (value: T | T[]) => Promise<any>
+export type AsyncEventEmitterCB = (length: number) => Promise<any>

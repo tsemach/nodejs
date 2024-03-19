@@ -3,19 +3,18 @@ import { utils } from './utils/utils'
 import { Valve } from './valve.enum'
 import { AsyncEventEmitterCB, EventEmitterCB } from './types'
 import { throws } from 'node:assert'
+import { timeStamp } from 'node:console'
 
 export class AsyncQueue<T> {
   private _limit: number
   private _data: T[] = []  
   private _valve = Valve.OPEN
   private readonly _getEmitter = new EventEmitter()
-  private readonly _putEmitter = new EventEmitter()
+  private readonly _putEmitter = new EventEmitter()  
   private _asyncCB: AsyncEventEmitterCB  
 
-  constructor(limit?: number) {    
-    if (limit) {
-      this._limit = limit
-    }
+  constructor(limit?: number) {       
+   this._limit = limit   
   }
 
   async put(data: T | T[]) {
@@ -25,6 +24,10 @@ export class AsyncQueue<T> {
       data.forEach(e => this.data.push(e))
       this._putEmitter.emit('put', data.length)      
 
+      if (this._asyncCB) {
+        await this._asyncCB(data.length)
+      }
+
       return
     }
     
@@ -32,6 +35,10 @@ export class AsyncQueue<T> {
     
     this.data.push(data)
     this._putEmitter.emit('put', 1)
+
+    if (this._asyncCB) {
+      await this._asyncCB(1)
+    }
   }
 
   async get(needed = 1): Promise<T | T[]> {    
@@ -39,12 +46,7 @@ export class AsyncQueue<T> {
     
     if (needed === 1) {
       const elem = this.data.shift()
-      this._getEmitter.emit("get", needed);
-      this._getEmitter.emit("data", elem);
-
-      if (this._asyncCB) {
-        await this._asyncCB(elem)
-      }
+      this._getEmitter.emit("get", needed);      
 
       return elem
     }
@@ -53,13 +55,8 @@ export class AsyncQueue<T> {
     for (const i of utils.range(0, needed)) {
       result.push(this.data.shift())
     }
-    this._getEmitter.emit("get", needed);
-    this._getEmitter.emit("data", result);
-
-    if (this._asyncCB) {
-      await this._asyncCB(result)
-    }
- 
+    this._getEmitter.emit("get", needed);    
+    
     return result
   }
 
@@ -109,20 +106,25 @@ export class AsyncQueue<T> {
     }
   }
 
-  public on(cb: EventEmitterCB<T>) {
-    this._getEmitter.on('data', cb)
+  public on(cb: EventEmitterCB) {    
+    this._putEmitter.on('put', cb)      
   }
 
-  public asyncCB(cb: AsyncEventEmitterCB<T>) {
+  public off(cb: EventEmitterCB) {
+    this._putEmitter.on('put', cb)      
+  }
+
+  public asyncOn(cb: AsyncEventEmitterCB) {
     this._asyncCB = cb
   }
 
-  public off(cb: EventEmitterCB<T>) {
-    this._getEmitter.off('data', cb)
+
+  public asyncOff() {
+    this._asyncCB = null
   }
 
   public hasSpace(needed = 1) {
-    if ( ! this._limit && this._limit < 0 ) {
+    if ( ! this._limit || this._limit < 0 ) {
       return true
     }
 
@@ -139,10 +141,6 @@ export class AsyncQueue<T> {
 
   private get data() {
     return this._data
-  }
-
-  private get limit() {
-    return this._limit
   }
 
 }
