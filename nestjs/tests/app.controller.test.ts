@@ -1,13 +1,13 @@
 import { AppController } from '../src/controllers/app.controller';
-import { Initiator } from './common'
-import { expect } from 'chai'
+import { Initiator } from './common';
+import { expect } from 'chai';
 
 describe('AppController', () => {
   let appController: AppController;
 
-  before(async () => {    
-    await Initiator.instance.init()    
-  })
+  before(async () => {
+    await Initiator.instance.init();
+  });
 
   describe('root', () => {
     it('should return "Hello World!"', () => {

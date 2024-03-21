@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  nginx:
+    container_name: https-nginx
+    image: nginx            
+    ports:
+      - 8080:8080
+      - 8081:8081
+      - 8443:8443
+    networks:
+      - nginx
+    volumes:
+      - ./html:/usr/share/nginx/html
+      - ./certs/sddc:/etc/nginx/certs
+      - ./conf.d:/etc/nginx/conf.d
+
+networks:
+  nginx:
+    driver: bridge

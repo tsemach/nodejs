@@ -5,36 +5,38 @@ import { Application } from '../../src/application';
 
 export class Initiator {
   public static _instance: Initiator;
-  private _isInit = false  
-  private _S3
+  private _isInit = false;
   private _app: INestApplication;
 
-  private constructor() {    
-  }
+  private constructor() {}
 
   public static get instance() {
-    return Initiator._instance || (Initiator._instance = new Initiator())
+    return Initiator._instance || (Initiator._instance = new Initiator());
   }
 
   async init() {
-    if ( ! this._isInit) {      
-      this._isInit = true
+    if (!this._isInit) {
+      this._isInit = true;
     }
-    
+
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
     }).compile();
 
     this._app = moduleFixture.createNestApplication();
     await this._app.init();
-    Application.instance.app = this._app   
+    Application.instance.app = this._app;
   }
 
-  get<T = any>(module: any, searvice: string | symbol | Function | Type<T>, options = { strict: true })  {
-    return this._app.select(module).get(searvice, options) as T
-  } 
+  get<T = any>(
+    module: any,
+    service: string | symbol | Type<T>,
+    options = { strict: true },
+  ) {
+    return this._app.select(module).get(service, options) as T;
+  }
 
   get app() {
-    return this._app
+    return this._app;
   }
 }

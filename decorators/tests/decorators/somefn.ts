@@ -1,7 +1,7 @@
-// import { duration } from "../../src/decorators"
+import { duration } from "../../src/decorators"
 import { utils } from '../../src/common'
 
-export function duration(message: string) {
+export function durationa(message: string) {
   return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
     const originalMethod = descriptor.value;
 
@@ -31,9 +31,17 @@ function first() {
     console.log("first(): called");
   };
 }
-
-@duration('somefn')
-export async function somenf() {
-  console.log('somenf called')
-  utils.sleep(100)
+class Stam {
+  @duration('duration')
+  async duratiionMain() {
+    console.info("going to call to util.sleep")
+    await utils.sleep(1000)
+  }
 }
+
+async function duratiionMain()  {
+  await new Stam().duratiionMain()
+}
+
+
+

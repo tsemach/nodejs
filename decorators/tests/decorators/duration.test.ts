@@ -8,7 +8,6 @@ import { expect } from 'chai'
 import { utils } from '../../src/common'
 import { duration } from '../../src/decorators'
 import { shutdown } from 'log4js'
-import { somenf } from './somefn'
 const logger = Logger.get('application-test')
 
 describe('Test Duration Decorator API', function() {  
@@ -19,7 +18,7 @@ describe('Test Duration Decorator API', function() {
   })
 
   it('duration.test.ts: test duration is log ok', async () => {        
-    await somenf()
+    // await somenf()
   })
     
 }) 

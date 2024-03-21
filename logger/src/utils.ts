@@ -1,4 +1,6 @@
-import path from 'path';
+import fs from 'fs'
+import path, { resolve } from 'path';
+import { globSync } from 'glob'
 import appRoot from 'app-root-path';
 
 const PROJECT_ROOT = '.'
@@ -73,4 +75,41 @@ export function compact(o: any) {
   }
 
   return o;
+}
+
+export function defineProperty(o: any, name: string | number, value: any, isWriteable = true) {
+  Object.defineProperty(o, name, {
+    value,
+    writable: isWriteable,
+    enumerable: true
+  });
+
+  return o
+}
+
+export async function sleep(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms))
+}
+
+export function deleteLogsFiles() {
+  const { NODE_ENV, MODULE_NAME } = process.env
+
+  if (!MODULE_NAME) {
+    return
+  }
+
+  const loggerFile = (NODE_ENV === 'local' ? `${appRoot.path}/logger-${MODULE_NAME}-*` : `/shared/tmp/fms-logger-${MODULE_NAME}-*`)
+
+  const files = globSync(loggerFile);    
+  for (const file of files) {
+    fs.unlinkSync(file)
+  }
+}
+
+export const utils = {
+  extractCallerInfo,
+  sleep,
+  compact,
+  defineProperty,
+  deleteLogsFiles
 }

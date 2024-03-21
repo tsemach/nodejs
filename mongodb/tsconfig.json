@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "ESNext",
+    "types": ["jest", "node", "reflect-metadata"],
+    "allowJs": true,
+    "sourceMap": true,
+    "declaration": true,
+    "esModuleInterop": true,
+    "incremental": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "resolveJsonModule": true,
+    "outDir": "dist"
+  },
+  "include": [
+    "./src/**/*"
+  ]
+}
