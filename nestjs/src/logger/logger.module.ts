@@ -26,6 +26,7 @@ export class LoggerModule {
   static forFeature(context: string): DynamicModule {
     return {
       module: LoggerModule,
+      imports: [LoggerModule.forRoot({ level: 'debug' })],
       providers: [
         {
           provide: 'CONTEXT_LOGGER',
